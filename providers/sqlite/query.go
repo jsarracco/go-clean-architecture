@@ -4,14 +4,17 @@ import (
 	"clean-go/domain"
 	"clean-go/engine"
 	"database/sql"
+	"strconv"
 )
 
 type (
 
-	// Query object for memory storage
+	// Query object for sql
 	Query struct {
 		OrderByColumn string
 		Direction     string
+		Offset        int
+		Limit         int
 	}
 )
 
@@ -42,19 +45,33 @@ func translateQuery(dbengine *sql.DB, query *engine.Query) *Query {
 		}
 	}
 
+	if query.Offset > 0 {
+		q.Offset = query.Offset
+	}
+
+	if query.Limit > 0 {
+		q.Limit = query.Limit
+	}
+
 	return q
 }
 
 // GetAll returns results based on query
 func (q *Query) GetAll(g []*domain.Greeting) []*domain.Greeting {
 
-	query := "select * from greetings"
+	query := "SELECT * FROM greetings"
 
 	if q.OrderByColumn == OrderColumnID {
-		query += " order by id " + q.Direction
+		query += " ORDER BY id " + q.Direction
 	}
 	if q.OrderByColumn == OrderColumnDate {
-		query += " order by date " + q.Direction
+		query += " ORDER BY date " + q.Direction
+	}
+	if q.Limit > 0 {
+		query += " LIMIT " + strconv.Itoa(q.Limit)
+	}
+	if q.Offset > 0 {
+		query += " OFFSET " + strconv.Itoa(q.Offset)
 	}
 
 	rows, err := db.Query(query)

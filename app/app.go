@@ -5,7 +5,7 @@ package main
 import (
 	"clean-go/adapters/web"
 	"clean-go/engine"
-	"clean-go/providers/sqlite"
+	"clean-go/providers/memorystore"
 	"net/http"
 )
 
@@ -18,10 +18,10 @@ func main() {
 	//store := mongodb.NewStorage(config.MongoURL)
 
 	// get sqlite
-	store := sqlite.NewStorage()
+	//store := sqlite.NewStorage()
 
 	// get memory store
-	//store := memorystore.NewStorage()
+	store := memorystore.NewStorage()
 
 	// set store
 	e := engine.NewEngine(store)

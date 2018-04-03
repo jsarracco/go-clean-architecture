@@ -10,6 +10,8 @@ type (
 	Query struct {
 		OrderByColumn string
 		Direction     string
+		Offset        int
+		Limit         int
 	}
 )
 
@@ -25,11 +27,11 @@ const (
 func (q *Query) GetAll(g []*domain.Greeting) []*domain.Greeting {
 
 	if q.OrderByColumn == OrderColumnID {
-		g = getGreetingsByID(q.Direction)
+		g = getGreetingsByID(q.Direction, q.Offset, q.Limit)
 	}
 
 	if q.OrderByColumn == OrderColumnDate {
-		g = getGreetingsByDate(q.Direction)
+		g = getGreetingsByDate(q.Direction, q.Offset, q.Limit)
 	}
 
 	return g
@@ -49,6 +51,14 @@ func translateQuery(query *engine.Query) *Query {
 		case engine.Descending:
 			q.Direction = "desc"
 		}
+	}
+
+	if query.Offset > 0 {
+		q.Offset = query.Offset
+	}
+
+	if query.Limit > 0 {
+		q.Limit = query.Limit
 	}
 
 	return q

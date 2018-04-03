@@ -22,22 +22,22 @@ func saveGreeting(g *domain.Greeting) {
 	greetingsData = append(greetingsData, *g)
 }
 
-func getGreetingsByDate(direction string) []*domain.Greeting {
+func getGreetingsByDate(direction string, offset int, limit int) []*domain.Greeting {
 	g := sortGreetingsByDate(greetingsData)
 	if direction == descending {
 		g = reverseOrder(g)
 	}
-	return convertForView(g)
+	return convertForView(limitResults(g, offset, limit))
 }
 
 // This assumes ids are already sorted by id
 // for memory store so we don't need to sort via slice data
-func getGreetingsByID(direction string) []*domain.Greeting {
+func getGreetingsByID(direction string, offset int, limit int) []*domain.Greeting {
 	g := greetingsData
 	if direction == descending {
 		g = reverseOrder(g)
 	}
-	return convertForView(g)
+	return convertForView(limitResults(g, offset, limit))
 }
 
 func convertForView(g []domain.Greeting) []*domain.Greeting {
@@ -62,6 +62,16 @@ func reverseOrder(g []domain.Greeting) []domain.Greeting {
 		returnVal = append(returnVal, g[i])
 	}
 	return returnVal
+}
+
+func limitResults(g []domain.Greeting, offset int, limit int) []domain.Greeting {
+	if len(g) == 0 {
+		return g
+	}
+	if len(g) > limit {
+		g = g[offset:limit]
+	}
+	return g
 }
 
 func sortGreetingsByDate(g []domain.Greeting) []domain.Greeting {
