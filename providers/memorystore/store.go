@@ -2,7 +2,6 @@ package memorystore
 
 import (
 	"clean-go/domain"
-	"fmt"
 	"sort"
 	"time"
 )
@@ -14,9 +13,15 @@ const (
 
 var greetingsData []domain.Greeting
 
+func clearData() {
+	greetingsData = nil
+}
+
 func saveGreeting(g *domain.Greeting) {
-	// increment id
-	g.ID = int64(len(greetingsData))
+	// auto increment id for static save
+	if g.ID == 0 {
+		g.ID = int64(len(greetingsData))
+	}
 
 	// save value
 	greetingsData = append(greetingsData, *g)
@@ -33,7 +38,7 @@ func getGreetingsByDate(direction string, offset int, limit int) []*domain.Greet
 // This assumes ids are already sorted by id
 // for memory store so we don't need to sort via slice data
 func getGreetingsByID(direction string, offset int, limit int) []*domain.Greeting {
-	g := greetingsData
+	g := sortGreetingsByID(greetingsData)
 	if direction == descending {
 		g = reverseOrder(g)
 	}
@@ -74,11 +79,39 @@ func limitResults(g []domain.Greeting, offset int, limit int) []domain.Greeting 
 	return g
 }
 
+func sortGreetingsByID(g []domain.Greeting) []domain.Greeting {
+	var sortedGreetings []domain.Greeting
+
+	// build date sortable greetings
+	p := make(GreetingsSortByID, len(g))
+	for i := range g {
+		p[i].ID = g[i].ID
+		p[i].Date = g[i].Date
+		p[i].Author = g[i].Author
+		p[i].Content = g[i].Content
+	}
+
+	// sort it
+	sort.Sort(p)
+
+	// convert back to sorted greeting
+	for i := range p {
+		greeting := greeting{}.Greeting
+		greeting.ID = p[i].ID
+		greeting.Author = p[i].Author
+		greeting.Content = p[i].Content
+		greeting.Date = p[i].Date
+		sortedGreetings = append(sortedGreetings, greeting)
+	}
+
+	return sortedGreetings
+}
+
 func sortGreetingsByDate(g []domain.Greeting) []domain.Greeting {
 	var sortedGreetings []domain.Greeting
 
 	// build date sortable greetings
-	p := make(TimeList, len(g))
+	p := make(GreetingsSortByDate, len(g))
 	for i := range g {
 		p[i].ID = g[i].ID
 		p[i].Date = g[i].Date
@@ -108,7 +141,7 @@ type (
 	// Pair is a data structure to hold key/value pairs
 	Pair struct {
 		Key   string
-		Value int
+		Value int64
 	}
 
 	// TimePair is a data structure to hold key/value pairs
@@ -124,61 +157,18 @@ type (
 
 	// TimeList is a slice of time pairs
 	TimeList []TimePair
+
+	// GreetingsSortByID holds greetings and has sort methods
+	GreetingsSortByID []domain.Greeting
+
+	// GreetingsSortByDate holds greetings and has sort methods
+	GreetingsSortByDate []domain.Greeting
 )
 
-func (p PairList) Len() int           { return len(p) }
-func (p PairList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-func (p PairList) Less(i, j int) bool { return p[i].Value < p[j].Value }
+func (p GreetingsSortByID) Len() int           { return len(p) }
+func (p GreetingsSortByID) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p GreetingsSortByID) Less(i, j int) bool { return p[i].ID < p[j].ID }
 
-func (p TimeList) Len() int           { return len(p) }
-func (p TimeList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-func (p TimeList) Less(i, j int) bool { return p[i].Date.Before(p[j].Date) }
-
-//
-// Testing Stuff - not used
-//
-
-func sortTesting() {
-	noble := map[string]int{
-		"Radon":   1,
-		"Xenon":   5,
-		"Krypton": 3,
-		"Argon":   4,
-		"Neon":    7,
-		"Helium":  0,
-	}
-	sortGreetingsByID(noble, "desc")
-}
-
-func sortGreetingsByID(mapCollection map[string]int, direction string) {
-	p := make(PairList, len(mapCollection))
-	i := 0
-	for k, v := range mapCollection {
-		p[i] = Pair{k, v}
-		i++
-	}
-	sort.Sort(p)
-	fmt.Println(p)
-	fmt.Println(p[0].Key)
-}
-
-func getMockData() []domain.Greeting {
-	var returnVal []domain.Greeting
-	g := domain.Greeting{Author: "post+12", ID: 5, Date: time.Now().Add(12 * time.Hour), Content: "test"}
-	returnVal = append(returnVal, g)
-	g = domain.Greeting{Author: "postnow", ID: 1, Date: time.Now(), Content: "test"}
-	returnVal = append(returnVal, g)
-	g = domain.Greeting{Author: "post+24", ID: 15, Date: time.Now().Add(24 * time.Hour), Content: "test"}
-	returnVal = append(returnVal, g)
-	return returnVal
-}
-
-func sortGreetingsNotUsed(g []domain.Greeting) []domain.Greeting {
-	// TODO: use sorting based on query passed in from
-	// engine, currently only uses order and direction
-
-	// Just flip the array
-	g = reverseOrder(g)
-
-	return g
-}
+func (p GreetingsSortByDate) Len() int           { return len(p) }
+func (p GreetingsSortByDate) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p GreetingsSortByDate) Less(i, j int) bool { return p[i].Date.Before(p[j].Date) }

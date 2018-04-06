@@ -1,6 +1,8 @@
 package engine
 
 import (
+	"fmt"
+
 	"golang.org/x/net/context"
 
 	"clean-go/domain"
@@ -26,6 +28,7 @@ func (g *greeter) Add(c context.Context, r *AddGreetingRequest) *AddGreetingResp
 	// whatever the internet has just been added to ...
 	greeting := domain.NewGreeting(r.Author, r.Content)
 	g.repository.Put(c, greeting)
+	fmt.Println("testing add for id", greeting)
 	return &AddGreetingResponse{
 		ID: greeting.ID,
 	}

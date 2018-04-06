@@ -14,19 +14,24 @@ import (
 // and start the webserver running ourselves.
 func main() {
 
-	// get mongodb
+	// get mongodb storage provider with config parameters
 	//store := mongodb.NewStorage(config.MongoURL)
 
-	// get sqlite
+	// get sqlite storage provider
 	//store := sqlite.NewStorage()
 
-	// get memory store
+	// get memory storage provider
 	store := memorystore.NewStorage()
 
-	// set store
+	// get new engine and set storage provider
 	e := engine.NewEngine(store)
 
-	http.ListenAndServe(":8080", web.NewWebAdapter(e, true))
+	// send engine(w/ storage provider) web adapter
+	w := web.NewWebAdapter(e, true)
+
+	http.ListenAndServe(":8080", w)
+
+	// additional debugging stuff
 
 	//fmt.Println(config.MongoURL)
 	//g1 := domain.NewGreeting("test1", "test1")

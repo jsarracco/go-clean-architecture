@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -34,6 +35,7 @@ func initGreetings(e *gin.Engine, f engine.EngFactory, endpoint string) {
 func (g greeter) list(c *gin.Context) {
 	ctx := getContext(c)
 	count, err := strconv.Atoi(c.Query("count"))
+	fmt.Println("count", count)
 	if err != nil || count == 0 {
 		count = 5
 	}

@@ -18,7 +18,8 @@ type (
 	}
 )
 
-// NewGreeting creates a new Greeting ... who'da thunk it!
+// NewGreeting creates a new Greeting
+// with the domain time now() method
 func NewGreeting(author, content string) *Greeting {
 	return &Greeting{
 		Author:  author,
