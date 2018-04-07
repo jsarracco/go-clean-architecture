@@ -17,8 +17,9 @@ type (
 )
 
 // NewStorage creates a new instance of this datastore storage factory
-func NewStorage() engine.StorageFactory {
-	db, err := sql.Open("sqlite3", "./guestbook.db")
+func NewStorage(storagePath string) engine.StorageFactory {
+	dbName := storagePath + "/guestbook.sqlite"
+	db, err := sql.Open("sqlite3", dbName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,6 +32,8 @@ func NewStorage() engine.StorageFactory {
 		content varchar(50)
 	);
 	`
+
+	// setup database schema
 	_, err = db.Exec(sqlStmt)
 	if err != nil && err.Error() != "table greetings already exists" {
 		log.Printf("%q %s\n", err, sqlStmt)

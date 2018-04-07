@@ -7,7 +7,7 @@ import (
 
 	"github.com/jsarracco/clean-go/adapters/web"
 	"github.com/jsarracco/clean-go/engine"
-	"github.com/jsarracco/clean-go/providers/memorystore"
+	"github.com/jsarracco/clean-go/providers/sqlite"
 )
 
 // when running in traditional or 'standalone' mode
@@ -19,10 +19,10 @@ func main() {
 	//store := mongodb.NewStorage(config.MongoURL)
 
 	// get sqlite storage provider
-	//store := sqlite.NewStorage()
+	store := sqlite.NewStorage(config.SQLiteStoragePath)
 
 	// get memory storage provider
-	store := memorystore.NewStorage()
+	//store := memorystore.NewStorage()
 
 	// get new engine and set storage provider
 	e := engine.NewEngine(store)
