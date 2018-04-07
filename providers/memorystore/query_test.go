@@ -1,10 +1,11 @@
 package memorystore_test
 
 import (
-	"clean-go/domain"
-	"clean-go/providers/memorystore"
 	"reflect"
 	"testing"
+
+	"github.com/jsarracco/clean-go/domain"
+	"github.com/jsarracco/clean-go/providers/memorystore"
 )
 
 func TestQuery_GetAll(t *testing.T) {

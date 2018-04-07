@@ -9,8 +9,8 @@ import (
 
 	"google.golang.org/appengine/datastore"
 
-	"clean-go/domain"
-	"clean-go/engine"
+	"github.com/jsarracco/clean-go/domain"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 type (

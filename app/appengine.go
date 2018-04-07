@@ -5,9 +5,9 @@ package main
 import (
 	"net/http"
 
-	"clean-go/adapters/web"
-	"clean-go/engine"
-	"clean-go/providers/appengine"
+	"github.com/jsarracco/clean-go/adapters/web"
+	"github.com/jsarracco/clean-go/engine"
+	"github.com/jsarracco/clean-go/providers/appengine"
 )
 
 // for appengine we don't use main to start the server

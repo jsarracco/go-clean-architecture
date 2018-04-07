@@ -2,11 +2,11 @@ package mongodb
 
 import (
 	"golang.org/x/net/context"
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"clean-go/domain"
-	"clean-go/engine"
+	"github.com/jsarracco/clean-go/domain"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 type (

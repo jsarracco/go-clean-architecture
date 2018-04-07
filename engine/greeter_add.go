@@ -5,7 +5,7 @@ import (
 
 	"golang.org/x/net/context"
 
-	"clean-go/domain"
+	"github.com/jsarracco/clean-go/domain"
 )
 
 type (

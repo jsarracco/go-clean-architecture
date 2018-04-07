@@ -1,12 +1,13 @@
 package memorystore_test
 
 import (
-	"clean-go/domain"
-	"clean-go/engine"
 	"context"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/jsarracco/clean-go/domain"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 type (

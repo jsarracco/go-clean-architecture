@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"clean-go/engine"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 func init() {

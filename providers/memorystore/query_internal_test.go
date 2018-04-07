@@ -2,9 +2,10 @@
 package memorystore
 
 import (
-	"clean-go/engine"
 	"reflect"
 	"testing"
+
+	"github.com/jsarracco/clean-go/engine"
 )
 
 func getEngineQuery() *engine.Query {

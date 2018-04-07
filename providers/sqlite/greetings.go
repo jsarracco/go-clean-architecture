@@ -1,11 +1,12 @@
 package sqlite
 
 import (
-	"clean-go/domain"
-	"clean-go/engine"
 	"context"
 	"database/sql"
 	"log"
+
+	"github.com/jsarracco/clean-go/domain"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 type (

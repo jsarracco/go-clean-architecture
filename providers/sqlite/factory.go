@@ -1,9 +1,10 @@
 package sqlite
 
 import (
-	"clean-go/engine"
 	"database/sql"
 	"log"
+
+	"github.com/jsarracco/clean-go/engine"
 
 	// Need to have an unused import here
 	_ "github.com/mattn/go-sqlite3"

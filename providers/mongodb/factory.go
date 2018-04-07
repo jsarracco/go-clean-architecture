@@ -3,9 +3,8 @@ package mongodb
 import (
 	"time"
 
-	"gopkg.in/mgo.v2"
-
-	"clean-go/engine"
+	"github.com/jsarracco/clean-go/engine"
+	mgo "gopkg.in/mgo.v2"
 )
 
 type (

@@ -1,6 +1,6 @@
 package memorystore
 
-import "clean-go/engine"
+import "github.com/jsarracco/clean-go/engine"
 
 type (
 	storageFactory struct{}

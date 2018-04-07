@@ -1,9 +1,10 @@
 package memorystore
 
 import (
-	"clean-go/domain"
-	"clean-go/engine"
 	"context"
+
+	"github.com/jsarracco/clean-go/domain"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 type (

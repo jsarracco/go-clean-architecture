@@ -2,10 +2,11 @@
 package memorystore
 
 import (
-	"clean-go/domain"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/jsarracco/clean-go/domain"
 )
 
 // was time.Now().Add(12 * time.Hour)

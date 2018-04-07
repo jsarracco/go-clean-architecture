@@ -1,9 +1,10 @@
 package memorystore
 
 import (
-	"clean-go/domain"
 	"sort"
 	"time"
+
+	"github.com/jsarracco/clean-go/domain"
 )
 
 const (

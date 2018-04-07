@@ -3,7 +3,7 @@
 package appengine
 
 import (
-	"clean-go/engine"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 type (

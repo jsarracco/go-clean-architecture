@@ -1,10 +1,10 @@
 package mongodb
 
 import (
-	"gopkg.in/mgo.v2"
+	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"clean-go/engine"
+	"github.com/jsarracco/clean-go/engine"
 )
 
 // translateQuery converts an application query spec into

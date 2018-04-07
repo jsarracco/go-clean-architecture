@@ -3,10 +3,11 @@
 package main
 
 import (
-	"clean-go/adapters/web"
-	"clean-go/engine"
-	"clean-go/providers/memorystore"
 	"net/http"
+
+	"github.com/jsarracco/clean-go/adapters/web"
+	"github.com/jsarracco/clean-go/engine"
+	"github.com/jsarracco/clean-go/providers/memorystore"
 )
 
 // when running in traditional or 'standalone' mode

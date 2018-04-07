@@ -1,9 +1,10 @@
 package memorystore
 
 import (
-	"clean-go/engine"
 	"reflect"
 	"testing"
+
+	"github.com/jsarracco/clean-go/engine"
 )
 
 func Test_newGreetingRepository(t *testing.T) {
