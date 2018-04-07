@@ -4,7 +4,7 @@
 *.so
 *.dylib
 
-# mac app build
+# mac app build binary
 app
 
 # Test binary, build with `go test -c`
